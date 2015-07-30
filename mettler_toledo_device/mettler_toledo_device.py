@@ -73,8 +73,8 @@ class MettlerToledoDevice(object):
             kwargs.update({'write_write_delay': self._WRITE_WRITE_DELAY})
         if ('port' not in kwargs) or (kwargs['port'] is None):
             port =  find_mettler_toledo_device_port(baudrate=kwargs['baudrate'],
-                                              try_ports=try_ports,
-                                              debug=kwargs['debug'])
+                                                    try_ports=try_ports,
+                                                    debug=kwargs['debug'])
             kwargs.update({'port': port})
 
         t_start = time.time()
@@ -129,23 +129,23 @@ class MettlerToledoDevice(object):
     def get_port(self):
         return self._serial_device.port
 
-    def info(self):
+    def get_commands(self):
         '''
-        Listing of general information.
+        Inquiry of all implemented MT-SICS commands.
         '''
-        return self._send_request_get_response('info')
+        return self._send_request_get_response('I0')
 
-    def get_version(self):
+    def get_mtsics_level(self):
         '''
-        Send back the current version number.
+        Inquiry of MT-SICS level and MT-SICS versions.
         '''
-        return self._send_request_get_response('getVersion')
+        return self._send_request_get_response('I1')
 
-    def get_description(self):
+    def get_serial_number(self):
         '''
-        Send back the current model information.
+        Inquiry of serial number.
         '''
-        return self._send_request_get_response('getDescription')
+        return self._send_request_get_response('I4')
 
 
 class MettlerToledoDevices(list):
@@ -179,8 +179,8 @@ def find_mettler_toledo_device_ports(baudrate=None, try_ports=None, debug=DEBUG)
     for port in serial_device_ports:
         try:
             dev = MettlerToledoDevice(port=port,baudrate=baudrate,debug=debug)
-            description = dev.get_description()
-            if 'METTLER TOLEDO' in description:
+            serial_number = dev.get_serial_number()
+            if 'I4 ' in description:
                 mettler_toledo_device_ports.append(port)
             dev.close()
         except (serial.SerialException, IOError):
@@ -189,8 +189,8 @@ def find_mettler_toledo_device_ports(baudrate=None, try_ports=None, debug=DEBUG)
 
 def find_mettler_toledo_device_port(baudrate=None, model_number=None, serial_number=None, try_ports=None, debug=DEBUG):
     mettler_toledo_device_ports = find_mettler_toledo_device_ports(baudrate=baudrate,
-                                                       try_ports=try_ports,
-                                                       debug=debug)
+                                                                   try_ports=try_ports,
+                                                                   debug=debug)
     if len(mettler_toledo_device_ports) == 1:
         return mettler_toledo_device_ports[0]
     elif len(mettler_toledo_device_ports) == 0:
