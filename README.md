@@ -15,6 +15,12 @@ License:
 
     BSD
 
+##Mettler Toledo RS232 Setup
+
+| BAUDRATE | BIT/PARITY | STOP BITS | HANDSHAKE | END OF LINE | CHAR SET | CONTINUOUS MODE |
+| :-:      | :-:        | :-:       | :-:       | :-:         | :-:      | :-:             |
+| 9600     | 8/NO       | 1         | NONE      | <CR><LF>    | ANSI/WIN | OFF             |
+
 ##Example Usage
 
 
