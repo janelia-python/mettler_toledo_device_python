@@ -114,15 +114,15 @@ class MettlerToledoDevice(object):
         request = self._args_to_request(*args)
         self._debug_print('request', request)
         response = self._serial_device.write_read(request,use_readline=True,check_write_freq=True)
-        response = response.split()
-        if 'ES' in response[0]:
-            raise MettlerToledoError('Syntax Error!')
-        elif 'ET' in response[0]:
-            raise MettlerToledoError('Transmission Error!')
-        elif 'EL' in response[0]:
-            raise MettlerToledoError('Logical Error!')
         response = response.replace('"','')
-        return response
+        response_list = response.split()
+        if 'ES' in response_list[0]:
+            raise MettlerToledoError('Syntax Error!')
+        elif 'ET' in response_list[0]:
+            raise MettlerToledoError('Transmission Error!')
+        elif 'EL' in response_list[0]:
+            raise MettlerToledoError('Logical Error!')
+        return response_list
 
     def close(self):
         '''
@@ -176,7 +176,7 @@ class MettlerToledoDevice(object):
         response = self._send_request_get_response('I4')
         if 'I' in response[1]:
             raise MettlerToledoError('Command understood, not executable at present.')
-        return response[2]
+        return int(response[2])
 
     def get_software_id(self):
         '''
@@ -187,18 +187,21 @@ class MettlerToledoDevice(object):
             raise MettlerToledoError('Command understood, not executable at present.')
         return response[2]
 
-    def get_stable_weight(self):
+    def get_weight_stable(self):
         '''
         Send the current stable net weight value.
         '''
-        response = self._send_request_get_response('S')
-        if 'I' in response[1]:
-            raise MettlerToledoError('Command understood, not executable at present.')
-        elif '+' in response[1]:
-            raise MettlerToledoError('Balance in overload range.')
-        elif '-' in response[1]:
-            raise MettlerToledoError('Balance in underload range.')
-        return response[2:]
+        try:
+            response = self._send_request_get_response('S')
+            if 'I' in response[1]:
+                raise MettlerToledoError('Command understood, not executable at present.')
+            elif '+' in response[1]:
+                raise MettlerToledoError('Balance in overload range.')
+            elif '-' in response[1]:
+                raise MettlerToledoError('Balance in underload range.')
+            return response[2:]
+        except:
+            pass
 
     def get_weight(self):
         '''
@@ -214,19 +217,23 @@ class MettlerToledoDevice(object):
         response.append(response[1])
         return response[2:]
 
-    def zero(self):
+    def zero_stable(self):
         '''
         Zero the balance.
         '''
-        response = self._send_request_get_response('Z')
-        if 'I' in response[1]:
-            raise MettlerToledoError('Zero setting not performed (balance is currently executing another command, e.g. taring, or timeout as stability was not reached).')
-        elif '+' in response[1]:
-            raise MettlerToledoError('Upper limit of zero setting range exceeded.')
-        elif '-' in response[1]:
-            raise MettlerToledoError('Lower limit of zero setting range exceeded.')
+        try:
+            response = self._send_request_get_response('Z')
+            if 'I' in response[1]:
+                raise MettlerToledoError('Zero setting not performed (balance is currently executing another command, e.g. taring, or timeout as stability was not reached).')
+            elif '+' in response[1]:
+                raise MettlerToledoError('Upper limit of zero setting range exceeded.')
+            elif '-' in response[1]:
+                raise MettlerToledoError('Lower limit of zero setting range exceeded.')
+            return True
+        except:
+            return False
 
-    def zero_immediately(self):
+    def zero(self):
         '''
         Zero the balance immediately regardless the stability of the balance.
         '''
@@ -277,9 +284,11 @@ def find_mettler_toledo_device_ports(baudrate=None, try_ports=None, debug=DEBUG)
     for port in serial_device_ports:
         try:
             dev = MettlerToledoDevice(port=port,baudrate=baudrate,debug=debug)
-            response = dev.get_mtsics_level()
-            if ('I1' in response[0]) and (('A' in response[1]) or ('I' in response[1])):
+            try:
+                serial_number = dev.get_serial_number()
                 mettler_toledo_device_ports.append(port)
+            except:
+                continue
             dev.close()
         except (serial.SerialException, IOError):
             pass
