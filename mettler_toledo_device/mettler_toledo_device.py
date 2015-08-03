@@ -52,14 +52,14 @@ class MettlerToledoDevice(object):
     dev.get_balance_data()
     ['XS204', 'Excellence', '220.0090', 'g']
     dev.get_weight_stable()
-    ['-0.0082', 'g'] #if weight is stable
+    [-0.0082, 'g'] #if weight is stable
     None  #if weight is dynamic
     dev.get_weight()
-    ['-0.6800', 'g', 'S'] #if weight is stable
-    ['-0.6800', 'g', 'D'] #if weight is dynamic
+    [-0.6800, 'g', 'S'] #if weight is stable
+    [-0.6800, 'g', 'D'] #if weight is dynamic
     dev.zero_stable()
     True  #zeros if weight is stable
-    False  #does not zero if weight is stable
+    False  #does not zero if weight is not stable
     dev.zero()
     'S'   #zeros if weight is stable
     'D'   #zeros if weight is dynamic
@@ -214,6 +214,7 @@ class MettlerToledoDevice(object):
                 raise MettlerToledoError('Balance in overload range.')
             elif '-' in response[1]:
                 raise MettlerToledoError('Balance in underload range.')
+            response[2] = float(response[2])
             return response[2:]
         except:
             pass
@@ -230,6 +231,7 @@ class MettlerToledoDevice(object):
         elif '-' in response[1]:
             raise MettlerToledoError('Balance in underload range.')
         response.append(response[1])
+        response[2] = float(response[2])
         return response[2:]
 
     def zero_stable(self):
