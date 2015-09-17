@@ -52,11 +52,9 @@ dev = devs[0]
 
 ##Installation
 
+[Setup Python](https://github.com/janelia-pypi/python_setup)
+
 ###Linux and Mac OS X
-
-[Setup Python for Linux](./PYTHON_SETUP_LINUX.md)
-
-[Setup Python for Mac OS X](./PYTHON_SETUP_MAC_OS_X.md)
 
 ```shell
 mkdir -p ~/virtualenvs/mettler_toledo_device
@@ -66,8 +64,6 @@ pip install mettler_toledo_device
 ```
 
 ###Windows
-
-[Setup Python for Windows](./PYTHON_SETUP_WINDOWS.md)
 
 ```shell
 virtualenv C:\virtualenvs\mettler_toledo_device
