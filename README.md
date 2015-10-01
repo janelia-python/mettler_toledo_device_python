@@ -1,5 +1,4 @@
-mettler_toledo_device_python
-============================
+#mettler_toledo_device_python
 
 This Python package (mettler\_toledo\_device) creates a class named
 MettlerToledoDevice, which contains an instance of
