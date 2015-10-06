@@ -279,10 +279,10 @@ class MettlerToledoDevices(list):
     Example Usage:
 
     devs = MettlerToledoDevices()  # Might automatically find all available devices
-    # if they are not found automatically, specify ports to try
-    devs = MettlerToledoDevices(try_ports=['/dev/ttyUSB0','/dev/ttyUSB1']) # Linux
-    devs = MettlerToledoDevices(try_ports=['/dev/tty.usbmodem262471','/dev/tty.usbmodem262472']) # Mac OS X
-    devs = MettlerToledoDevices(try_ports=['COM3','COM4']) # Windows
+    # if they are not found automatically, specify ports to use
+    devs = MettlerToledoDevices(use_ports=['/dev/ttyUSB0','/dev/ttyUSB1']) # Linux
+    devs = MettlerToledoDevices(use_ports=['/dev/tty.usbmodem262471','/dev/tty.usbmodem262472']) # Mac OS X
+    devs = MettlerToledoDevices(use_ports=['COM3','COM4']) # Windows
     dev = devs[0]
     '''
     def __init__(self,*args,**kwargs):
