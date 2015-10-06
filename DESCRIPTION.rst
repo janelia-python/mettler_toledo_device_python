@@ -44,6 +44,5 @@ Example Usage::
     devs = MettlerToledoDevices(try_ports=['/dev/ttyUSB0','/dev/ttyUSB1']) # Linux
     devs = MettlerToledoDevices(try_ports=['/dev/tty.usbmodem262471','/dev/tty.usbmodem262472']) # Mac OS X
     devs = MettlerToledoDevices(try_ports=['COM3','COM4']) # Windows
-    devs.keys()
-    dev = devs[serial_number]
+    dev = devs[0]
 
