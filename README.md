@@ -25,10 +25,11 @@ License:
 
 ```python
 from mettler_toledo_device import MettlerToledoDevice
-dev = MettlerToledoDevice() # Automatically finds device if one available
-dev = MettlerToledoDevice('/dev/ttyUSB0') # Linux specific port
-dev = MettlerToledoDevice('/dev/tty.usbmodem262471') # Mac OS X specific port
-dev = MettlerToledoDevice('COM3') # Windows specific port
+dev = MettlerToledoDevice() # Might automatically find device if one available
+# if it is not found automatically, specify port directly
+dev = MettlerToledoDevice(port='/dev/ttyUSB0') # Linux specific port
+dev = MettlerToledoDevice(port='/dev/tty.usbmodem262471') # Mac OS X specific port
+dev = MettlerToledoDevice(port='COM3') # Windows specific port
 dev.get_serial_number()
 1126493049
 dev.get_balance_data()
@@ -45,7 +46,14 @@ False  #does not zero if weight is not stable
 dev.zero()
 'S'   #zeros if weight is stable
 'D'   #zeros if weight is dynamic
-devs = MettlerToledoDevices()  # Automatically finds all available devices
+```
+
+```python
+devs = MettlerToledoDevices()  # Might automatically find all available devices
+# if they are not found automatically, specify ports to try
+devs = MettlerToledoDevices(try_ports=['/dev/ttyUSB0','/dev/ttyUSB1']) # Linux
+devs = MettlerToledoDevices(try_ports=['/dev/tty.usbmodem262471','/dev/tty.usbmodem262472']) # Mac OS X
+devs = MettlerToledoDevices(try_ports=['COM3','COM4']) # Windows
 dev = devs[0]
 ```
 
