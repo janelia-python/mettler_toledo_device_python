@@ -192,7 +192,7 @@ class MettlerToledoDevice(object):
         response = self._send_request_get_response('I4')
         if 'I' in response[1]:
             raise MettlerToledoError('Command understood, not executable at present.')
-        return int(response[2])
+        return response[2]
 
     def get_software_id(self):
         '''
