@@ -42,6 +42,8 @@ def call_git_describe(abbrev=4):
                   stdout=PIPE, stderr=PIPE)
         p.stderr.close()
         line = p.stdout.readlines()[0]
+        if type(line) != str:
+             line = line.decode('utf-8')
         return line.strip()
 
     except:
@@ -101,4 +103,4 @@ def get_git_version(abbrev=4):
 
 
 if __name__ == "__main__":
-    print get_git_version()
+    print(get_git_version())

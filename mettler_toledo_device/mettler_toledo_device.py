@@ -5,7 +5,10 @@ import time
 import atexit
 import platform
 import os
-from exceptions import Exception
+try:
+    from exceptions import Exception
+except ImportError:
+    pass
 
 from serial_device2 import SerialDevice, SerialDevices, find_serial_device_ports, WriteFrequencyError
 
