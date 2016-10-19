@@ -133,7 +133,7 @@ class MettlerToledoDevice(object):
         request = self._args_to_request(*args)
         self._debug_print('request', request)
         response = self._serial_device.write_read(request,use_readline=True,check_write_freq=True)
-        response = response.replace('"','')
+        response = response.decode().replace('"','')
         response_list = response.split()
         if 'ES' in response_list[0]:
             raise MettlerToledoError('Syntax Error!')
