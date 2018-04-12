@@ -1,34 +1,27 @@
-#mettler_toledo_device_python
+#+TITLE: mettler_toledo_device_python
+#+AUTHOR: Peter Polidoro
+#+EMAIL: peterpolidoro@gmail.com
 
-This Python package (mettler\_toledo\_device) creates a class named
-MettlerToledoDevice, which contains an instance of
-serial\_device2.SerialDevice and adds methods to it to interface to
-Mettler Toledo balances and scales that use the Mettler Toledo
-Standard Interface Command Set (MT-SICS).
+* Package Information
+  - Author :: Peter Polidoro
+  - License :: BSD
 
-Authors:
+  This Python package (mettler_toledo_device) creates a class named
+  MettlerToledoDevice, which contains an instance of
+  serial_device2.SerialDevice and adds methods to it to interface to
+  Mettler Toledo balances and scales that use the Mettler Toledo
+  Standard Interface Command Set (MT-SICS).
 
-    Peter Polidoro <polidorop@janelia.hhmi.org>
+* Mettler Toledo RS232 Setup
 
-Contributors:
+  | BAUDRATE | BIT/PARITY | STOP BITS | HANDSHAKE | END OF LINE  | CHAR SET | CONTINUOUS MODE |
+  |----------+------------+-----------+-----------+--------------+----------+-----------------|
+  |     9600 | 8/NO       |         1 | NONE      | \<CR\>\<LF\> | ANSI/WIN | OFF             |
 
-    James Pells <https://github.com/jpells>
-    Roger Zatkoff <https://github.com/rpzatkoff>
-
-License:
-
-    BSD
-
-##Mettler Toledo RS232 Setup
-
-| BAUDRATE | BIT/PARITY | STOP BITS | HANDSHAKE | END OF LINE  | CHAR SET | CONTINUOUS MODE |
-| :-:      | :-:        | :-:       | :-:       | :-:          | :-:      | :-:             |
-| 9600     | 8/NO       | 1         | NONE      | \<CR\>\<LF\> | ANSI/WIN | OFF             |
-
-##Example Usage
+* Example Usage
 
 
-```python
+  #+BEGIN_SRC python
 from mettler_toledo_device import MettlerToledoDevice
 dev = MettlerToledoDevice() # Might automatically find device if one available
 # if it is not found automatically, specify port directly
@@ -51,34 +44,34 @@ False  #does not zero if weight is not stable
 dev.zero()
 'S'   #zeros if weight is stable
 'D'   #zeros if weight is dynamic
-```
+  #+END_SRC
 
-```python
+  #+BEGIN_SRC python
 devs = MettlerToledoDevices()  # Might automatically find all available devices
 # if they are not found automatically, specify ports to use
 devs = MettlerToledoDevices(use_ports=['/dev/ttyUSB0','/dev/ttyUSB1']) # Linux
 devs = MettlerToledoDevices(use_ports=['/dev/tty.usbmodem262471','/dev/tty.usbmodem262472']) # Mac OS X
 devs = MettlerToledoDevices(use_ports=['COM3','COM4']) # Windows
 dev = devs[0]
-```
+  #+END_SRC
 
-##Installation
+* Installation
 
-[Setup Python](https://github.com/janelia-pypi/python_setup)
+  [[https://github.com/janelia-pypi/python_setup][Setup Python]]
 
-###Linux and Mac OS X
+** Linux and Mac OS X
 
-```shell
+   #+BEGIN_SRC sh
 mkdir -p ~/virtualenvs/mettler_toledo_device
 virtualenv ~/virtualenvs/mettler_toledo_device
 source ~/virtualenvs/mettler_toledo_device/bin/activate
 pip install mettler_toledo_device
-```
+   #+END_SRC
 
-###Windows
+** Windows
 
-```shell
+   #+BEGIN_SRC sh
 virtualenv C:\virtualenvs\mettler_toledo_device
 C:\virtualenvs\mettler_toledo_device\Scripts\activate
 pip install mettler_toledo_device
-```
+   #+END_SRC
