@@ -10,7 +10,7 @@ try:
 except ImportError:
     pass
 
-from serial_device2 import SerialDevice, SerialDevices, find_serial_device_ports, WriteFrequencyError
+from serial_interface import SerialInterface, SerialInterfaces, find_serial_interface_ports, WriteFrequencyError
 
 try:
     from pkg_resources import get_distribution, DistributionNotFound
@@ -40,7 +40,7 @@ class MettlerToledoDevice(object):
     '''
     This Python package (mettler_toledo_device) creates a class named
     MettlerToledoDevice, which contains an instance of
-    serial_device2.SerialDevice and adds methods to it to interface to
+    serial_interface.SerialInterface and adds methods to it to interface to
     Mettler Toledo balances and scales that use the Mettler Toledo
     Standard Interface Command Set (MT-SICS).
 
@@ -97,7 +97,7 @@ class MettlerToledoDevice(object):
             kwargs.update({'port': port})
 
         t_start = time.time()
-        self._serial_device = SerialDevice(*args,**kwargs)
+        self._serial_device = SerialInterface(*args,**kwargs)
         atexit.register(self._exit_mettler_toledo_device)
         time.sleep(self._RESET_DELAY)
         t_end = time.time()
@@ -300,7 +300,7 @@ class MettlerToledoDevices(list):
 
 
 def find_mettler_toledo_device_ports(baudrate=None, try_ports=None, debug=DEBUG):
-    serial_device_ports = find_serial_device_ports(try_ports=try_ports, debug=debug)
+    serial_device_ports = find_serial_interface_ports(try_ports=try_ports, debug=debug)
     os_type = platform.system()
     if os_type == 'Darwin':
         serial_device_ports = [x for x in serial_device_ports if 'tty.usbmodem' in x or 'tty.usbserial' in x]
@@ -326,7 +326,7 @@ def find_mettler_toledo_device_port(baudrate=None, model_number=None, serial_num
     if len(mettler_toledo_device_ports) == 1:
         return mettler_toledo_device_ports[0]
     elif len(mettler_toledo_device_ports) == 0:
-        serial_device_ports = find_serial_device_ports(try_ports)
+        serial_device_ports = find_serial_interface_ports(try_ports)
         err_string = 'Could not find any MettlerToledo devices. Check connections and permissions.\n'
         err_string += 'Tried ports: ' + str(serial_device_ports)
         raise RuntimeError(err_string)
