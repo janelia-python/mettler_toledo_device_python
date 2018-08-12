@@ -9,7 +9,7 @@ Standard Interface Command Set (MT-SICS).
 
 Authors::
 
-    Peter Polidoro <polidorop@janelia.hhmi.org>
+    Peter Polidoro <peterpolidoro@gmail.com>
 
 License::
 
@@ -45,4 +45,3 @@ Example Usage::
     devs = MettlerToledoDevices(use_ports=['/dev/tty.usbmodem262471','/dev/tty.usbmodem262472']) # Mac OS X
     devs = MettlerToledoDevices(use_ports=['COM3','COM4']) # Windows
     dev = devs[0]
-
