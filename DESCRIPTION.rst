@@ -9,7 +9,7 @@ Standard Interface Command Set (MT-SICS).
 
 Authors::
 
-    Peter Polidoro <peterpolidoro@gmail.com>
+    Peter Polidoro <peter@polidoro.io>
 
 License::
 

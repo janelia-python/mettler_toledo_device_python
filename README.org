@@ -1,6 +1,6 @@
 #+TITLE: mettler_toledo_device_python
 #+AUTHOR: Peter Polidoro
-#+EMAIL: peterpolidoro@gmail.com
+#+EMAIL: peter@polidoro.io
 
 * Package Information
   - Name :: mettler_toledo_device_python
@@ -8,7 +8,7 @@
   - License :: BSD
   - URL :: https://github.com/janelia-pypi/mettler_toledo_device_python
   - Author :: Peter Polidoro
-  - Email :: peterpolidoro@gmail.com
+  - Email :: peter@polidoro.io
 
   This Python package (mettler_toledo_device) creates a class named
   MettlerToledoDevice, which contains an instance of

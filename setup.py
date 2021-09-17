@@ -25,7 +25,7 @@ setup(
 
     # Author details
     author='Peter Polidoro',
-    author_email='peterpolidoro@gmail.com',
+    author_email='peter@polidoro.io',
 
     # Choose your license
     license='BSD',
